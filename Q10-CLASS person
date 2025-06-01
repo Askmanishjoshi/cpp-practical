@@ -1,0 +1,56 @@
+#include <iostream>
+#include <cmath>  // for sqrt()
+using namespace std;
+
+class Triangle {
+    double a, b, c;  // sides
+
+public:
+    // Constructor with exception checks
+    Triangle(double side1, double side2, double side3) {
+        if (side1 <= 0 || side2 <= 0 || side3 <= 0) {
+            throw "All sides must be greater than zero.";
+        }
+        if (side1 + side2 <= side3 || side2 + side3 <= side1 || side1 + side3 <= side2) {
+            throw "Sum of any two sides must be greater than the third side.";
+        }
+        a = side1;
+        b = side2;
+        c = side3;
+    }
+
+    // Area for right-angled triangle (base and height)
+    double area(double base, double height) {
+        if (base <= 0 || height <= 0) {
+            throw "Base and height must be greater than zero.";
+        }
+        return 0.5 * base * height;
+    }
+
+    // Area using Heron's formula for any triangle
+    double area() {
+        double s = (a + b + c) / 2.0;  // semi-perimeter
+        return sqrt(s * (s - a) * (s - b) * (s - c));
+    }
+};
+
+int main() {
+    try {
+        // Create a triangle object (valid sides)
+        Triangle t(3, 4, 5);
+
+        // Calculate area using Heron's formula
+        cout << "Area of triangle (Heron's formula): " << t.area() << endl;
+
+        // Calculate area assuming right-angled triangle (base=3, height=4)
+        cout << "Area of right-angled triangle: " << t.area(3, 4) << endl;
+
+        // Uncomment to test invalid triangle (throws exception)
+        // Triangle invalidT(1, 2, 3);
+
+    } catch (const char* msg) {
+        cout << "Error: " << msg << endl;
+    }
+
+    return 0;
+}
