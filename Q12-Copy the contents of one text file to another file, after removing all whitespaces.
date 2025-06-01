@@ -1,0 +1,32 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ifstream inFile("input.txt");   // Source file
+    ofstream outFile("output.txt"); // Destination file
+
+    if (!inFile) {
+        cout << "Error opening input file." << endl;
+        return 1;
+    }
+
+    if (!outFile) {
+        cout << "Error opening output file." << endl;
+        return 1;
+    }
+
+    char ch;
+    while (inFile.get(ch)) {
+        if (ch != ' ' && ch != '\t' && ch != '\n' && ch != '\r') {
+            outFile << ch;
+        }
+    }
+
+    cout << "File copied without whitespaces." << endl;
+
+    inFile.close();
+    outFile.close();
+
+    return 0;
+}
