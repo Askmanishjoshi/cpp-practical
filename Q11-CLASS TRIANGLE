@@ -1,0 +1,67 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Student {
+public:
+    int rollNo;
+    string name;
+    string className;
+    int year;
+    int totalMarks;
+
+    void input() {
+        cout << "Enter Roll No: "; cin >> rollNo;
+        cin.ignore();  // clear newline from buffer
+        cout << "Enter Name: "; getline(cin, name);
+        cout << "Enter Class: "; getline(cin, className);
+        cout << "Enter Year: "; cin >> year;
+        cout << "Enter Total Marks: "; cin >> totalMarks;
+    }
+
+    void display() {
+        cout << "Roll No: " << rollNo << ", Name: " << name
+             << ", Class: " << className << ", Year: " << year
+             << ", Total Marks: " << totalMarks << endl;
+    }
+};
+
+int main() {
+    Student students[5];
+
+    // Input 5 students
+    cout << "Enter details for 5 students:\n";
+    for (int i = 0; i < 5; i++) {
+        cout << "\nStudent " << i + 1 << ":\n";
+        students[i].input();
+    }
+
+    // Write student data to file
+    ofstream outFile("students.txt");
+    for (int i = 0; i < 5; i++) {
+        outFile << students[i].rollNo << "\n"
+                << students[i].name << "\n"
+                << students[i].className << "\n"
+                << students[i].year << "\n"
+                << students[i].totalMarks << "\n";
+    }
+    outFile.close();
+
+    // Read data back from file and display
+    ifstream inFile("students.txt");
+    cout << "\nReading student records from file:\n";
+    for (int i = 0; i < 5; i++) {
+        inFile >> students[i].rollNo;
+        inFile.ignore(); // ignore newline
+        getline(inFile, students[i].name);
+        getline(inFile, students[i].className);
+        inFile >> students[i].year;
+        inFile >> students[i].totalMarks;
+        inFile.ignore(); // ignore newline
+
+        students[i].display();
+    }
+    inFile.close();
+
+    return 0;
+}
