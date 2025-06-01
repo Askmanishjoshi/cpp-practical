@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cctype>     // for isalpha() and tolower()
+using namespace std;
+
+int main(int argc, char* argv[]) {
+    int count[26] = {0};  // to count A-Z (case-insensitive)
+
+    // Loop over each command line argument (excluding program name)
+    for (int i = 1; i < argc; i++) {
+        string arg = argv[i];
+        for (char ch : arg) {
+            if (isalpha(ch)) {
+                ch = tolower(ch);           // make lowercase
+                count[ch - 'a']++;          // increment count for the letter
+            }
+        }
+    }
+
+    // Print the result
+    cout << "Letter\tCount\n";
+    for (int i = 0; i < 26; i++) {
+        if (count[i] > 0) {
+            cout << char('a' + i) << "\t" << count[i] << endl;
+        }
+    }
+
+    return 0;
+}
